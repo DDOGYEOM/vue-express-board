@@ -11,18 +11,20 @@ const BoardStore: Module<BoardModuleState, BoardModuleState> = {
   state: {
     boardList: [],
   },
+  getters: {
+    getTest: state => state.boardList,
+  },
   mutations: {
-    setBoardList(state, data) {
-      state.boardList = data;
+    setBoardList(state, response) {
+      state.boardList = response.data;
     },
   },
   actions: {
-    async setAndLoadBoardListData({ commit }): Promise<BoardModel[]> {
+    setAndLoadBoardListData: async ({ commit }): Promise<BoardModel[]> => {
       try {
         const response = await getBoardList();
-        console.log(response);
-
         commit('setBoardList', response);
+
         return response;
       } catch (e) {
         console.log(e);
