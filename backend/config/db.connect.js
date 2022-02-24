@@ -1,5 +1,5 @@
 const mariadb = require('mysql');
-const dbConfig = require('../config/db.config.js')
+const dbConfig = require('./db.config.js')
 const conn = mariadb.createConnection({
     host: dbConfig.HOST,
     port: dbConfig.PORT,

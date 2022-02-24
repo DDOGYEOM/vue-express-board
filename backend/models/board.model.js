@@ -1,4 +1,4 @@
-const sql = require("./db.connect");
+const sql = require("../config/db.connect");
 
 const Board = function(board) {
     this.title = board.title;
@@ -64,7 +64,6 @@ Board.updateById = (idx, board, result) => {
         [board.title, board.writer, board.contents, idx],
         (err, res)=> {
             if(err) {
-                console.log("싸발 에러입니다.");
                 console.log("error: ", err);
                 result(null, err);
                 return;

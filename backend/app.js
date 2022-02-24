@@ -3,16 +3,15 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
-
-const whitelist = ["http://localhost:3000/"];
+const jwt = require('jsonwebtoken');
 
 var app = express();
 
 var indexRouter = require('./routes/index');
-var loginRouter = require('./routes/login');
+var userRouter = require('./routes/user');
 var boardRouter = require('./routes/board');
-
-const mariadb = require('./models/db.connect');
+// 
+const mariadb = require('./config/db.connect');
 mariadb.connect;
 
 // view engine setup
@@ -28,8 +27,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
+
 app.use('/', indexRouter);
-app.use('/users', loginRouter);
+app.use('/users', userRouter);
 app.use('/board', boardRouter);
 
 // catch 404 and forward to error handler

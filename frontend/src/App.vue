@@ -1,17 +1,7 @@
 <template>
-  <v-app>
-    <v-app-bar app color="indigo darken-1" dark>
-      <div class="d-flex align-center">
-        <span class="">dogyeom CRUD</span>
-      </div>
-
-      <v-spacer></v-spacer>
-    </v-app-bar>
-
-    <v-main>
-      <router-view />
-    </v-main>
-  </v-app>
+  <div id="app">
+    <router-view />
+  </div>
 </template>
 
 <script lang="ts">
@@ -25,3 +15,13 @@ export default Vue.extend({
   }),
 });
 </script>
+
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
+</style>

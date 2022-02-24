@@ -23,7 +23,7 @@ exports.create = (req, res) => {
     Board.create(board, (err, data) => {
         if(err) {
             res.status(500).send({
-                message: err.message || "Some error occurred while creating the Tutorial."
+                message: err.message || "Some error occurred while creating the Board."
             });
         }else {
             res.send(data);
@@ -38,7 +38,7 @@ exports.findAll = (req, res) => {
     Board.findAll(title, (err, data) => {
         if(err) {
             res.status.send({
-                message: err.message || "Some error occurred while retrieving tutorials."
+                message: err.message || "Some error occurred while retrieving Boards."
             });
         }else {
             require("date-utils");

@@ -1,15 +1,16 @@
 import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
-import Home from '../views/Home.vue';
+
 import BoardList from '../views/board/BoardList.vue';
+import PageLayout from '../layout/PageLayout.vue';
 
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
   {
     path: '/',
-    name: 'Home',
-    component: Home,
+    name: 'PageLayout',
+    component: PageLayout,
   },
   {
     path: '/board',
