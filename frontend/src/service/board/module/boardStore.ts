@@ -1,37 +1,41 @@
-import { Module } from 'vuex';
-import { getBoardList } from '../api/Board';
-import { BoardModel } from '../model/boardModel';
+import { getBoardById, getBoardList, addBoard, updateBoard, deleteBoardById } from '../api/Board';
+import { BoardListAPIModel, BoardAPIModel } from '../model/BoardAPIModel';
+import { BoardModel } from '../model/BoardModel';
 
-export interface BoardModuleState {
-  boardList: Array<BoardModel>;
+const state = {}
+const getters = {}
+const mutations = {}
+const actions = {
+  async loadBoardList(): Promise<BoardListAPIModel> {
+    const res = await getBoardList();
+    return res;
+  },
+
+  async loadBoardById (context:any, payload: {idx: number}): Promise<BoardAPIModel> {
+    const res = await getBoardById(payload.idx);
+    return res;
+  },
+
+  async addBoardById (context:any, payload: {data: BoardModel}): Promise<void> {
+    await addBoard(payload.data);
+  },
+
+  async updateBoardById (context:any, payload: {idx: number, data: BoardModel}): Promise<void> {
+    await updateBoard(payload.idx, payload.data);
+  },
+
+  async removeBoardById (context:any, payload: {idx: number}): Promise<BoardAPIModel> {
+    const res = await deleteBoardById(payload.idx);
+    return res;
+    
+  },
+
 }
 
-const BoardStore: Module<BoardModuleState, BoardModuleState> = {
+export default {
   namespaced: true,
-  state: {
-    boardList: [],
-  },
-  getters: {
-    getTest: state => state.boardList,
-  },
-  mutations: {
-    setBoardList(state, response) {
-      state.boardList = response.data;
-    },
-  },
-  actions: {
-    setAndLoadBoardListData: async ({ commit }): Promise<BoardModel[]> => {
-      try {
-        const response = await getBoardList();
-        commit('setBoardList', response);
-
-        return response;
-      } catch (e) {
-        console.log(e);
-        return Promise.reject(e);
-      }
-    },
-  },
+  state,
+  getters,
+  mutations,
+  actions
 };
-
-export default BoardStore;

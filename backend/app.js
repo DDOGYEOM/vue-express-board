@@ -10,7 +10,7 @@ var app = express();
 var indexRouter = require('./routes/index');
 var userRouter = require('./routes/user');
 var boardRouter = require('./routes/board');
-// 
+
 const mariadb = require('./config/db.connect');
 mariadb.connect;
 

@@ -11,6 +11,13 @@ const routes: Array<RouteConfig> = [
     path: '/',
     name: 'PageLayout',
     component: PageLayout,
+    children: [
+      {
+        path: 'board',
+        name: 'BoardList',
+        component: BoardList,
+      }
+    ]
   },
   {
     path: '/board',

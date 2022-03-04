@@ -3,9 +3,9 @@ var router = express.Router();
 
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', (req, res) => {
   res.json({msg: 'This is CORS-enabled for all origins!'})
-  res.render('index', { title: 'Express' });
+  // res.render('index', { title: 'Express' });
 });
 
 

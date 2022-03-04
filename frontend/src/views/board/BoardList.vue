@@ -1,22 +1,46 @@
 <template>
-  <b-container>
+
     <b-table hover :items="items"></b-table>
-  </b-container>
+
+    <!-- <b-button @click="deleteTest()" >삭제!</b-button> -->
+
 </template>
 
 <script lang="ts">
-export default {
+import Vue from 'vue';
+export default Vue.extend({
   name: 'BoardList',
-  data(): unknown {
+  data() {
     return {
-      items: [
-        { age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
-        { age: 21, first_name: 'Larsen', last_name: 'Shaw' },
-        { age: 89, first_name: 'Geneva', last_name: 'Wilson' },
-        { age: 40, first_name: 'Thor', last_name: 'MacDonald' },
-        { age: 29, first_name: 'Dick', last_name: 'Dunlap' },
-      ],
+      items: [{
+      }],
     };
   },
-};
+
+  created() {
+    this.getBoardList();    
+  },
+
+  methods: {
+    async getBoardList() {
+      try{
+        const res = await this.$store.dispatch('board/loadBoardList');
+        console.log(res.data.body);
+        this.items = res.data.body;
+      }catch (error) {
+        console.log(error);
+      }    
+    },
+
+    async deleteTest() {
+      try {
+        const idx = 3
+        const res = await this.$store.dispatch('board/loadBoardById', {idx});
+        console.log(res);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
+})
 </script>

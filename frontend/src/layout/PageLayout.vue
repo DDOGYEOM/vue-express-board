@@ -3,6 +3,7 @@
     <Menu class="menu"></Menu>
     <div id="contents">
       <NavBar></NavBar>
+      <router-view/>
     </div>
   </div>
 </template>

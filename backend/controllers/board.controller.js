@@ -37,22 +37,18 @@ exports.findAll = (req, res) => {
 
     Board.findAll(title, (err, data) => {
         if(err) {
-            res.status.send({
+            res.status(500).send({
                 message: err.message || "Some error occurred while retrieving Boards."
             });
         }else {
-            require("date-utils");
-            var newDate = new Date();
-            var time = newDate.toFormat('YYYY-MM-DD HH24:MI:SS');
-            console.log(time);
-            res.send(data);
+            res.send({message: 'get boardList success', body: data});
         }
     });
 };
 
 
 exports.findById = (req, res) =>  {
-    Board.findById(req.query.id, (err, data) => {
+    Board.findById(req.query.idx, (err, data) => {
         if(err){
             if(err.kind === "not_found") {
                 res.status(404).send({
@@ -60,7 +56,7 @@ exports.findById = (req, res) =>  {
                 });
             } else {
                 res.status(500).send({
-                    message: "Error retrieving Baord with id " + req.query.id
+                    message: "Error retrieving Board with id " + req.query.id
                   });
             }
         }else {
@@ -69,7 +65,7 @@ exports.findById = (req, res) =>  {
                     message: "제목이나 작성자가 빈 값입니다."
                 })
             }else {
-                res.send(data);
+                res.send({message: 'get board success', body: data});
             }
         }
     });
@@ -89,7 +85,7 @@ exports.updateById = (req, res) => {
         writeDate: null,
         updateDate: null
     });
-    Board.updateById(req.query.id, board, (err,data) => {
+    Board.updateById(req.query.idx, board, (err,data) => {
         if(err){
             if(err.kind === "not_found") {
                 res.status(404).send({
@@ -97,7 +93,7 @@ exports.updateById = (req, res) => {
                 });
             } else {
                 res.status(500).send({
-                    message: "Error Updating Baord with id " + req.query.id
+                    message: "Error Updating Board with id " + req.query.id
                   });
             }
         }else {
@@ -106,7 +102,7 @@ exports.updateById = (req, res) => {
                     message: "제목이나 작성자가 빈 값입니다."
                 })
             }else {
-                res.send(data);
+                res.send({message: 'update board success', body: data});
             }
             
         }
@@ -122,11 +118,11 @@ exports.deleteById = (req, res) => {
                 });
             } else {
                 res.status(500).send({
-                    message: "Could not delete Baord with id " + req.query.id
+                    message: "Could not delete Board with id " + req.query.id
                   });
             }
         }else {
-            res.send(data);
+            res.send({message: 'delete board success', body: data});
         }
     })
 }

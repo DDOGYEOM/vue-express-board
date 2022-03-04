@@ -46,5 +46,14 @@ module.exports = {
             }
             return callback(null, res[0]);
         })
+    },
+
+    deleteUser: (data,callback) => {
+        sql.query(`delete from user where user_id=?`, data.user_id, (err, res) => {
+            if(err){
+                return callback(err);
+            }
+            return callback(null, res[0]);
+        })
     }
 }
