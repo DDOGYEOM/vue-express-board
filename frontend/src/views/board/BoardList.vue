@@ -1,9 +1,12 @@
 <template>
-
-    <b-table hover :items="items"></b-table>
-
-    <!-- <b-button @click="deleteTest()" >삭제!</b-button> -->
-
+    <b-card class="m-3" title="BoardList">
+      <b-card-body>
+        <b-table hover :items="items"></b-table>
+      </b-card-body>
+      <b-card-body>
+        <b-button style="float:right;" @click="deleteTest()" >글쓰기</b-button>  
+      </b-card-body>
+    </b-card>
 </template>
 
 <script lang="ts">

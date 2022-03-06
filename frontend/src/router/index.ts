@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
 
 import BoardList from '../views/board/BoardList.vue';
+import BoardWrite from '../views/board/BoardWrite.vue';
 import PageLayout from '../layout/PageLayout.vue';
 
 Vue.use(VueRouter);
@@ -11,18 +12,19 @@ const routes: Array<RouteConfig> = [
     path: '/',
     name: 'PageLayout',
     component: PageLayout,
+    redirect: '/board',
     children: [
       {
         path: 'board',
-        name: 'BoardList',
+        name: 'Board',
         component: BoardList,
-      }
+      },
+      {
+        path: 'write',
+        name: 'BoardWrite',
+        component: BoardWrite,
+      },
     ]
-  },
-  {
-    path: '/board',
-    name: 'BoardList',
-    component: BoardList,
   },
   {
     path: '/about',
@@ -39,5 +41,6 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes,
 });
+
 
 export default router;

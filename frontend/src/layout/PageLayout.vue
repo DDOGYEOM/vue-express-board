@@ -1,22 +1,24 @@
 <template>
-  <div>
-    <Menu class="menu"></Menu>
+  <div class="wrapper">
+    <side-menu class="menu"></side-menu>
     <div id="contents">
-      <NavBar></NavBar>
-      <router-view/>
+      <nav-bar></nav-bar>
+      <content-layout/>
     </div>
   </div>
 </template>
 <script>
 import Vue from 'vue';
-import Menu from '../components/Menu.vue';
+import SideMenu from '../components/Menu.vue';
 import NavBar from '../components/NavBar.vue';
+import ContentLayout from '@/layout/ContentLayout.vue';
 
 export default Vue.extend({
   name: 'PageLayout',
   components: {
-    Menu,
+    SideMenu,
     NavBar,
+    ContentLayout
   },
 
   data: () => ({
@@ -33,6 +35,12 @@ export default Vue.extend({
   #contents {
     width: 100% !important;
   }
+}
+
+.wrapper {
+    position: relative;
+    top: 0;
+    height: 100vh;
 }
 
 #contents {
