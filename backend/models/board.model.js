@@ -42,7 +42,7 @@ Board.findById = (idx, result) => {
 }
 
 Board.findAll = (title, result) => {
-    let query = "SELECT * FROM board";
+    let query = "select idx,title,writer,contents, date_format(write_date, '%Y-%m-%d %H:%i:%S') write_date , date_format(update_date, '%Y-%m-%d %H:%i:%S') update_date from board";
     if (title) {
         query += `WHERE title LIKE '%${title}%'`;
     }

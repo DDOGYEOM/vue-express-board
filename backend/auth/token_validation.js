@@ -5,7 +5,6 @@ const YOUR_SECRET_KEY = process.env.SECRET_KEY;
 module.exports = {
     checkToken: (req, res, next) => {
         let token = req.get("authorization");
-        console.log(YOUR_SECRET_KEY);
         
         if(token) {
             token = token.slice(7);

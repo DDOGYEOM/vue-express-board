@@ -3,22 +3,22 @@
     <side-menu class="menu"></side-menu>
     <div id="contents">
       <nav-bar></nav-bar>
-      <content-layout/>
+      <content-layout />
     </div>
   </div>
 </template>
 <script>
-import Vue from 'vue';
-import SideMenu from '../components/Menu.vue';
-import NavBar from '../components/NavBar.vue';
-import ContentLayout from '@/layout/ContentLayout.vue';
+import Vue from "vue";
+import SideMenu from "../components/Menu.vue";
+import NavBar from "../components/NavBar.vue";
+import ContentLayout from "@/layout/ContentLayout.vue";
 
 export default Vue.extend({
-  name: 'PageLayout',
+  name: "PageLayout",
   components: {
     SideMenu,
     NavBar,
-    ContentLayout
+    ContentLayout,
   },
 
   data: () => ({
@@ -38,9 +38,9 @@ export default Vue.extend({
 }
 
 .wrapper {
-    position: relative;
-    top: 0;
-    height: 100vh;
+  position: relative;
+  top: 0;
+  height: 100vh;
 }
 
 #contents {

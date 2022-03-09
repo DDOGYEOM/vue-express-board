@@ -1,49 +1,63 @@
 <template>
-    <b-card class="m-3" title="BoardList">
-      <b-card-body>
-        <b-table hover :items="items"></b-table>
-      </b-card-body>
-      <b-card-body>
-        <b-button style="float:right;" @click="deleteTest()" >글쓰기</b-button>  
-      </b-card-body>
-    </b-card>
+  <b-card class="m-3" title="BoardList">
+    <b-card-body>
+      <b-table hover :items="items" :fields="fields" v-model="items" @row-clicked="moveToDetail">
+      </b-table>
+    </b-card-body>
+    <b-card-body>
+      <b-button style="float: right" @click="deleteTest()">글쓰기</b-button>
+    </b-card-body>
+  </b-card>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import { BoardModel } from "@/service/board/model/BoardModel";
+import Vue from "vue";
+
+var board:BoardModel = {
+  idx:0,
+  title:'',
+  writer:'',
+  contents:'',
+  writeDate:'',
+  updateDate:'',
+}
 export default Vue.extend({
-  name: 'BoardList',
+  name: "BoardList",
   data() {
     return {
-      items: [{
-      }],
+      items: [ {} ],
+      fields: ['idx','title','writer','write_date']
     };
   },
 
   created() {
-    this.getBoardList();    
+    this.getBoardList();
   },
 
   methods: {
     async getBoardList() {
-      try{
-        const res = await this.$store.dispatch('board/loadBoardList');
-        console.log(res.data.body);
+      try {
+        const res = await this.$store.dispatch("BoardModule/loadBoardList");
+        
         this.items = res.data.body;
-      }catch (error) {
+      } catch (error) {
         console.log(error);
-      }    
+      }
     },
 
     async deleteTest() {
       try {
-        const idx = 3
-        const res = await this.$store.dispatch('board/loadBoardById', {idx});
+        const idx = 3;
+        const res = await this.$store.dispatch("BoardModule/loadBoardById", { idx });
         console.log(res);
       } catch (error) {
         console.log(error);
       }
-    }
+    },
+    moveToDetail(item:BoardModel) {
+      this.$router.push('/board/detail/' + item.idx);
   }
-})
+  },
+});
 </script>

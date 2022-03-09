@@ -31,10 +31,10 @@ module.exports = {
                     message: err.message || "Some error occurred while creating the User."
                 });
             }
-            return res.status(200).json ({
-                data: results
-              });
-        })
+
+            
+            return res.status(200).send({message: 'create user success', body: results});
+        });
     },
 
     getUserByUserID: (req, res) => {
@@ -52,9 +52,7 @@ module.exports = {
                 });
             }
 
-            return res.json({
-                data: result
-            });
+            return res.status(200).send({message: 'get board success', body: result});
         });
     },
 
@@ -66,9 +64,7 @@ module.exports = {
                     message: err.message || "Error retrieving UserList"
                 });
             }
-            return res.json({
-                data: results
-            });
+            return res.status(200).send({message: 'get board success', body: results});
         });
     },
 
@@ -123,16 +119,22 @@ module.exports = {
             const checkPwd = compareSync(body.user_pwd, result.user_pwd);
             
             if(checkPwd) {
-                const jsontoken = sign({ result: result }, YOUR_SECRET_KEY, { algorithm: 'HS256', expiresIn: '10m'});
-                // res.cookie('accessToken', accessToken);
+                const options = {
+                    domain: "localhost",
+                    httpOnly: true,
+                };
 
-                return res.json({
+                const jsontoken = sign({ result: result }, YOUR_SECRET_KEY, { algorithm: 'HS256', expiresIn: '10m'});
+                
+                res.cookie('login-Token', jsontoken, options);
+
+                res.send({
                     success: 1,
                     message: "login successfully",
                     token: jsontoken
                 });
             }else {
-                return res.json({
+                res.send({
                     success: 0,
                     message: "Invalid ID or Password"
                 })

@@ -1,10 +1,12 @@
+var moment = require('moment');
+
 const Board = require("../models/board.model");
 
 
 exports.create = (req, res) => {
-    require("date-utils");
-    var newDate = new Date();
-    var time = newDate.toFormat('YYYY-MM-DD HH24:MI:SS');
+    
+    var newDate = moment().format('YYYY-MM-DD HH:mm:ss');
+    console.log(newDate);
 
     if(!req.body) {
         res.status(400).send({
@@ -16,8 +18,8 @@ exports.create = (req, res) => {
         title: req.body.title,
         writer: req.body.writer,
         contents: req.body.contents,
-        writeDate: time,
-        updateDate: null
+        writeDate: newDate,
+        updateDate: newDate
     });
 
     Board.create(board, (err, data) => {

@@ -6,6 +6,12 @@ export interface BoardModel {
   title: string;
   writer: string;
   contents: string | null;
-  writeDate: Date | null;
-  updateDate: Date | null;
+  writeDate: string;
+  updateDate: string | null;
+}
+
+export interface BoardAddModel {
+  title: string;
+  writer: string;
+  contents: string | null;
 }

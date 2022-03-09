@@ -1,17 +1,17 @@
 import { BoardModel } from "./BoardModel";
 
 export interface BoardListAPIModel {
-    data: {
-        message: string,
-        body: BoardModel[]
-    } 
+  data: {
+    message: string;
+    body: BoardModel[];
+  } | null;
 }
 
 export interface BoardAPIModel {
-    data: {
-        message: string,
-        body: BoardModel
-    } 
+  data: {
+    message: string;
+    body: BoardModel;
+  } | null;
 }
 
 // export interface ErrorModel {
@@ -19,4 +19,3 @@ export interface BoardAPIModel {
 //         message:string
 //     }
 // }
-
