@@ -1,6 +1,7 @@
 const {User,create, getUserByUserID, getUsers, updateUser} = require("../models/user.model");
 const { genSaltSync, hashSync, compareSync} = require("bcrypt");
 const { sign } = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 require('dotenv').config();
 const YOUR_SECRET_KEY = process.env.SECRET_KEY;
 
@@ -119,20 +120,52 @@ module.exports = {
             const checkPwd = compareSync(body.user_pwd, result.user_pwd);
             
             if(checkPwd) {
-                const options = {
-                    domain: "localhost",
-                    httpOnly: true,
-                };
-
-                const jsontoken = sign({ result: result }, YOUR_SECRET_KEY, { algorithm: 'HS256', expiresIn: '10m'});
+                if(req.cookies && req.cookies.token) {
+                    jwt.verify(req.cookies.token, YOUR_SECRET_KEY, (err, decoded) => {
+                        if(err) {
+                            console.log(err);
+                            return res.json({
+                                success: 0,
+                                message: "중복 로그인 검사 중 에러 발생!"
+                            });
+                        }else {
+                            if(decoded.result.user_id === body.user_id) {
+                                res.send({
+                                    success: 0,
+                                    message: "aleady login!"
+                                });
+                            }else {
+                                const options = {
+                                    domain: "localhost",
+                                    httpOnly: true,
+                                };
+                                const jsontoken = sign({ result: result }, YOUR_SECRET_KEY, { algorithm: 'HS256', expiresIn: '10m'});
+                            
+                                res.cookie('token', jsontoken, options);
+            
+                                res.send({
+                                    success: 1,
+                                    message: "login successfully",
+                                    token: jsontoken
+                                });
+                            }
+                        }
+                    });             
+                }else {
+                    const options = {
+                        domain: "localhost",
+                        httpOnly: true,
+                    };
+                    const jsontoken = sign({ result: result }, YOUR_SECRET_KEY, { algorithm: 'HS256', expiresIn: '10m'});
                 
-                res.cookie('login-Token', jsontoken, options);
+                    res.cookie('token', jsontoken, options);
 
-                res.send({
-                    success: 1,
-                    message: "login successfully",
-                    token: jsontoken
-                });
+                    res.send({
+                        success: 1,
+                        message: "login successfully",
+                        token: jsontoken
+                    });
+                }
             }else {
                 res.send({
                     success: 0,
@@ -140,6 +173,14 @@ module.exports = {
                 })
             }
         });
+    },
+
+    logout:  (req, res) => {
+        if (req.cookies && req.cookies.token) {
+            res.clearCookie("token");
+        }
+    
+        res.sendStatus(200);
     }
 
 

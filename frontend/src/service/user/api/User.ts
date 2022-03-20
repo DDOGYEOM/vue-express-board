@@ -12,13 +12,6 @@ export const login = (loginData: LoginModel): Promise<LoginSuccessModel> => {
 };
 
 
-// export const updateBoard = (
-//   idx: number,
-//   data: BoardModel
-// ): Promise<BoardAPIModel> => {
-//   return axios.put(apiUrl + "/board/update?idx=" + idx, data);
-// };
-
-// export const deleteBoardById = (idx: number): Promise<BoardAPIModel> => {
-//   return axios.delete(apiUrl + "/board/delete?idx=" + idx);
-// };
+export const logout = (): Promise<void> => {
+  return axios.get("/api/users/logout");
+};

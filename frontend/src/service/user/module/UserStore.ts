@@ -3,7 +3,7 @@ import { ActionContext, Module } from "vuex";
 
 import { LoginModel } from "../model/UserModel";
 import { LoginSuccessModel, UserAPIModel } from "../model/UserAPIModel";
-import { login } from "../api/User";
+import { login, getUser, logout } from "../api/User";
 
 export interface UserModuleState {
   userData: UserAPIModel | null,
@@ -26,6 +26,16 @@ export const UserModule: Module<UserModuleState,RootState> = {
       const res = await login(payload);
       return res;
     },
+
+   async getUserData(context: ActionContext<UserModuleState, RootState>, id: string): Promise<UserAPIModel> {
+      const res = await getUser(id);
+      return res;
+   },
+
+   async logout(): Promise<void> {
+      await logout();
+   }
+
   }
 
 }

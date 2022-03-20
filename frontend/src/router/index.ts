@@ -14,7 +14,7 @@ const routes: Array<RouteConfig> = [
     path: "/",
     name: "PageLayout",
     component: PageLayout,
-    redirect: "/board",
+    redirect: "/login",
     children: [
       {
         path: "board",
