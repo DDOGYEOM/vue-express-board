@@ -54,17 +54,58 @@ export default (
     msg:'제목은 공백이거나 30글자 이상은 안됩니다.',
   }),
 
+  created() {
+    if(this.$route.params.idx != undefined) {
+       const idx = parseInt(this.$route.params.idx);
+       this.getBoard(idx);   
+    }
+  },
+
+  // mounted() {
+  //   const idx = parseInt(this.$route.params.idx);
+  //   console.log(idx);
+  //   this.getBoard(idx);
+  // },
+
   methods: {
+    async getBoard(idx: number) {
+      try {
+        const res = await this.$store.dispatch(
+          'BoardModule/loadBoardById',
+          idx
+        );
+        this.board = res.data.body;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+
     btnWrite() {
       if (this.board.title.trim() === "" ) {
         alert("제목을 입력하세요!");
         this.$refs.title.focus();
       }else {
-        this.addBoard(this.board);
-        this.$router.replace('list');
+        if(this.$route.params.idx != undefined) {
+          this.updateBoard(parseInt(this.$route.params.idx), this.board);
+        }else {
+          this.addBoard(this.board);
+        }
+        
+        this.$router.replace('/board/list');
       }
       
     },
+    
+    async updateBoard(idx: number,inputData:BoardAddModel) {
+        console.log(inputData);
+        try {
+          await this.$store.dispatch("BoardModule/updateBoardById", { idx: idx, data: inputData } , {root: true});
+        } catch (error) {
+          console.log(error);
+        }
+    },
+    
 
     async addBoard(inputData:BoardAddModel) {
       console.log(inputData);

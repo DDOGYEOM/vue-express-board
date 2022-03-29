@@ -53,9 +53,9 @@ export const BoardModule: Module<BoardModuleState,RootState> = {
   
     async removeBoardById(
       context: ActionContext<BoardModuleState, RootState>,
-      payload: { idx: number }
+      payload: number
     ): Promise<BoardAPIModel> {
-      const res = await deleteBoardById(payload.idx);
+      const res = await deleteBoardById(payload);
       return res;
     },
   }

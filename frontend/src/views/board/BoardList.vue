@@ -5,7 +5,7 @@
       </b-table>
     </b-card-body>
     <b-card-body>
-      <b-button style="float: right" @click="deleteTest()">글쓰기</b-button>
+      <b-button style="float: right" @click="moveToWrite()">글쓰기</b-button>
     </b-card-body>
   </b-card>
 </template>
@@ -46,14 +46,8 @@ export default Vue.extend({
       }
     },
 
-    async deleteTest() {
-      try {
-        const idx = 3;
-        const res = await this.$store.dispatch("BoardModule/loadBoardById", { idx });
-        console.log(res);
-      } catch (error) {
-        console.log(error);
-      }
+    async moveToWrite() {
+       this.$router.push('/board/write');
     },
     moveToDetail(item:BoardModel) {
       this.$router.push('/board/detail/' + item.idx);

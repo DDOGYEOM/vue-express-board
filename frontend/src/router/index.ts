@@ -33,6 +33,11 @@ const routes: Array<RouteConfig> = [
             component: BoardWrite,
           },
           {
+            path: "write/:idx",
+            name: "BoardWrite",
+            component: BoardWrite,
+          },
+          {
             path: "detail/:idx",
             name: "BoardDetail",
             component: BoardDetail,

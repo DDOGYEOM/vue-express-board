@@ -1,4 +1,5 @@
 <template>
+<div>
   <b-card class="m-3">
     <div class="info py-2 px-2 mx-3">
       <div class="info-left">
@@ -19,9 +20,15 @@
       />
     </b-card-body>
   </b-card>
+  <b-button-group class="float-end me-3">
+    <b-button variant="primary" class="me-1" @click="moveToUpdate()">수정</b-button>
+    <b-button variant="danger" @click="deleteBoard()">삭제</b-button>
+  </b-button-group>
+</div>
 </template>
 
 <script lang="ts">
+import { deleteBoardById } from '@/service/board/api/Board';
 import { BoardModel } from '@/service/board/model/BoardModel';
 import Vue from 'vue';
 import { VueEditor } from 'vue2-editor';
@@ -42,13 +49,14 @@ export default Vue.extend({
     return {
       board: boardData,
       customToolbar: [[]],
+      idx: 0
     };
   },
 
   mounted() {
-    const idx = parseInt(this.$route.params.idx);
-    console.log(idx);
-    this.getBoard(idx);
+    this.idx = parseInt(this.$route.params.idx);
+    console.log(this.idx);
+    this.getBoard(this.idx);
   },
 
   methods: {
@@ -63,6 +71,33 @@ export default Vue.extend({
         console.log(error);
       }
     },
+
+   async deleteBoard() {
+     try {
+        const res = await this.$store.dispatch(
+          'BoardModule/removeBoardById',
+          this.idx
+        );
+        console.log(res);
+      } catch (error) {
+        console.log(error);
+      }
+      
+      const delConfirm = confirm('정말 삭제하시겠습니까?');
+      
+      if (delConfirm) {
+        alert('삭제되었습니다.');
+        this.$router.replace('/board')
+      }
+      else {
+        alert('삭제가 취소되었습니다.');
+        return;
+      }
+   },
+
+   moveToUpdate() {
+      this.$router.push('/board/write/' + this.idx);
+   }
   },
 });
 </script>

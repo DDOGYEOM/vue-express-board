@@ -54,11 +54,11 @@ exports.findById = (req, res) =>  {
         if(err){
             if(err.kind === "not_found") {
                 res.status(404).send({
-                    message: `Not found Board with id ${req.query.id}.`
+                    message: `Not found Board with id ${req.query.idx}.`
                 });
             } else {
                 res.status(500).send({
-                    message: "Error retrieving Board with id " + req.query.id
+                    message: "Error retrieving Board with id " + req.query.idx
                   });
             }
         }else {
@@ -112,15 +112,15 @@ exports.updateById = (req, res) => {
 }
 
 exports.deleteById = (req, res) => {
-    Board.removeById(req.query.id, (err,data) => {
+    Board.removeById(req.query.idx, (err,data) => {
         if(err){
             if(err.kind === "not_found") {
                 res.status(404).send({
-                    message: `Not found Board with id ${req.query.id}.`
+                    message: `Not found Board with id ${req.query.idx}.`
                 });
             } else {
                 res.status(500).send({
-                    message: "Could not delete Board with id " + req.query.id
+                    message: "Could not delete Board with id " + req.query.idx
                   });
             }
         }else {
