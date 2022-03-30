@@ -1,4 +1,4 @@
-import { BoardModel } from "./BoardModel";
+import { BoardModel } from './BoardModel';
 
 export interface BoardListAPIModel {
   data: {
@@ -12,6 +12,12 @@ export interface BoardAPIModel {
     message: string;
     body: BoardModel;
   } | null;
+}
+
+export interface BoardListInfoModel {
+  offset: number;
+  limit: number;
+  title?: string;
 }
 
 // export interface ErrorModel {

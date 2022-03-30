@@ -1,8 +1,10 @@
-import Vue from "vue";
-import Vuex from "vuex";
-import { BoardModuleState, BoardModule } from "@/service/board/module/BoardStore";
-import { UserModuleState, UserModule } from "@/service/user/module/UserStore";
-
+import Vue from 'vue';
+import Vuex from 'vuex';
+import {
+  BoardModuleState,
+  BoardModule,
+} from '@/service/board/module/boardStore';
+import { UserModuleState, UserModule } from '@/service/user/module/UserStore';
 
 Vue.use(Vuex);
 export interface RootState {
@@ -13,6 +15,6 @@ export interface RootState {
 export default new Vuex.Store({
   modules: {
     BoardModule,
-    UserModule
+    UserModule,
   },
 });

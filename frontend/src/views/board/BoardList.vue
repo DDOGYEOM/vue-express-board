@@ -1,8 +1,21 @@
 <template>
   <b-card class="m-3" title="BoardList">
     <b-card-body>
-      <b-table hover :items="items" :fields="fields" v-model="items" @row-clicked="moveToDetail">
+      <b-table
+        hover
+        :items="items"
+        :fields="fields"
+        v-model="items"
+        @row-clicked="moveToDetail"
+      >
       </b-table>
+      <b-pagination
+        v-model="currentPage"
+        :total-rows="totalCount"
+        :per-page="perPage"
+        align="center"
+        @page-click="pageClick"
+      ></b-pagination>
     </b-card-body>
     <b-card-body>
       <b-button style="float: right" @click="moveToWrite()">글쓰기</b-button>
@@ -11,35 +24,35 @@
 </template>
 
 <script lang="ts">
-import { BoardModel } from "@/service/board/model/BoardModel";
-import Vue from "vue";
+import { BoardModel } from '@/service/board/model/BoardModel';
+import Vue from 'vue';
 
-var board:BoardModel = {
-  idx:0,
-  title:'',
-  writer:'',
-  contents:'',
-  writeDate:'',
-  updateDate:'',
-}
 export default Vue.extend({
-  name: "BoardList",
+  name: 'BoardList',
   data() {
     return {
-      items: [ {} ],
-      fields: ['idx','title','writer','write_date']
+      items: [{}],
+      fields: ['idx', 'title', 'writer', 'write_date'],
+      currentPage: 1,
+      totalCount: 0,
+      perPage: 10,
     };
   },
 
   created() {
-    this.getBoardList();
+    this.getBoardList(this.currentPage);
   },
 
   methods: {
-    async getBoardList() {
+    async getBoardList(page: number) {
       try {
-        const res = await this.$store.dispatch("BoardModule/loadBoardList");
-        
+        var limit = 10;
+        var offset = (page - 1) * limit;
+        const res = await this.$store.dispatch('BoardModule/loadBoardList', {
+          limit,
+          offset,
+        });
+        this.totalCount = res.data.totalCount;
         this.items = res.data.body;
       } catch (error) {
         console.log(error);
@@ -47,11 +60,16 @@ export default Vue.extend({
     },
 
     async moveToWrite() {
-       this.$router.push('/board/write');
+      this.$router.push('/board/write');
     },
-    moveToDetail(item:BoardModel) {
+    moveToDetail(item: BoardModel) {
       this.$router.push('/board/detail/' + item.idx);
-  }
+    },
+
+    pageClick(button: any, page: number) {
+      this.currentPage = page;
+      this.getBoardList(page);
+    },
   },
 });
 </script>

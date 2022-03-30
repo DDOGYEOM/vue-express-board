@@ -41,11 +41,24 @@ Board.findById = (idx, result) => {
         });
 }
 
-Board.findAll = (title, result) => {
-    let query = "select idx,title,writer,contents, date_format(write_date, '%Y-%m-%d %H:%i:%S') write_date , date_format(update_date, '%Y-%m-%d %H:%i:%S') update_date from board";
+Board.totalCount = (result) => {
+    let query = "SELECT COUNT(*) totalCount FROM board b;"
+    sql.query(query, (err, res) => {
+        if(err) {
+            console.log("error: ", err);
+            return;
+        }
+        result(null, res[0]);
+    });
+}
+
+Board.findAll = (title, offset, limit, result) => {
+    let query = "select idx,title,writer,contents, date_format(write_date, '%Y-%m-%d %H:%i:%S') write_date , date_format(update_date, '%Y-%m-%d %H:%i:%S') update_date from board LIMIT " + limit + " OFFSET " + offset + ";";
+     + offset + ";";
     if (title) {
         query += `WHERE title LIKE '%${title}%'`;
     }
+
 
     sql.query(query, (err, res) => {
         if(err) {
@@ -54,7 +67,7 @@ Board.findAll = (title, result) => {
             return;
         }
 
-        console.log("board: ", res);
+        // console.log("board: ", res);
         result(null, res);
         });
 };

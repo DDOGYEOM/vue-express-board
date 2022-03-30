@@ -36,14 +36,27 @@ exports.create = (req, res) => {
 
 exports.findAll = (req, res) => {
     const title = req.query.title;
+    const offset = req.query.offset;
+    const limit = req.query.limit;
+    let page = 0;
+    let count = 0;
 
-    Board.findAll(title, (err, data) => {
+    Board.totalCount((err, data) => {
+        if(err) {
+            console.log(err);
+        }
+        count = data.totalCount;   
+    });
+    
+
+    Board.findAll(title,offset,limit, (err, data) => {
         if(err) {
             res.status(500).send({
                 message: err.message || "Some error occurred while retrieving Boards."
             });
         }else {
-            res.send({message: 'get boardList success', body: data});
+            res.send({message: 'get boardList success', totalCount: count, body: data});
+            
         }
     });
 };
