@@ -9,17 +9,21 @@
         @row-clicked="moveToDetail"
       >
       </b-table>
+    </b-card-body>
+    <div class="px-3 row justify-content-end align-items-center">
+      <div class="empty-space col-2"></div>
       <b-pagination
+        class="col-8 my-auto"
         v-model="currentPage"
         :total-rows="totalCount"
         :per-page="perPage"
         align="center"
         @page-click="pageClick"
       ></b-pagination>
-    </b-card-body>
-    <b-card-body>
-      <b-button style="float: right" @click="moveToWrite()">글쓰기</b-button>
-    </b-card-body>
+      <div class="button-space col-2">
+        <b-button class="float-end" @click="moveToWrite()">글쓰기</b-button>
+      </div>
+    </div>
   </b-card>
 </template>
 

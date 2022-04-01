@@ -1,7 +1,5 @@
 const {User,create, getUserByUserID, getUsers, updateUser} = require("../models/user.model");
-const { genSaltSync, hashSync, compareSync} = require("bcrypt");
-const { sign } = require("jsonwebtoken");
-const jwt = require("jsonwebtoken");
+const authenticateUtils = require("../utils/authenticate")
 require('dotenv').config();
 const YOUR_SECRET_KEY = process.env.SECRET_KEY;
 
